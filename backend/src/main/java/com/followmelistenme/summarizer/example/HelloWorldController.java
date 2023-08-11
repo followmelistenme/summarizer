@@ -1,5 +1,6 @@
 package com.followmelistenme.summarizer.example;
 
+import com.followmelistenme.summarizer.integration.mattermost.Service;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -18,6 +19,13 @@ public class HelloWorldController {
   @RequestMapping()
   public String lol() {
     return "lol";
+  }
+
+  @RequestMapping(method = RequestMethod.GET, path = "/lel", params = {"threadId"})
+  @ResponseBody
+  public String lel(@RequestParam("threadId") String threadId) {
+    Service service = new Service();
+    return service.getMessagesByThread(threadId);
   }
 
   @RequestMapping(method = RequestMethod.GET, path = "/kek", params = {"url"})
