@@ -12,11 +12,10 @@ services:
     depends_on:
       - postgres
 
-#just for example
   frontend:
     build:
       context: .
-      dockerfile: "./backend/docker/Dockerfile"
+      dockerfile: "./frontend/docker/Dockerfile"
     ports:
       - "5098:8080"
     networks:

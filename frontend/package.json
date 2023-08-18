@@ -5,8 +5,6 @@
   "main": "index.ts",
   "license": "MIT",
   "scripts": {
-    "start": "yarn && webpack --config ./webpack.config.js --watch --color --progress",
-    "build": "webpack --mode=production --node-env=production",
     "lint": "eslint 'src/**/*.{ts,tsx}' 'server/**/*.{ts,tsx}'",
     "typecheck": "tsc && echo No errors!",
     "build:dev": "webpack --mode=development",
