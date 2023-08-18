@@ -47,6 +47,7 @@ const App = () => {
 
     return (
         <form className={classes.app} onSubmit={handleSubmit(onSubmit)}>
+            <div className="logo" />
             <TextField label="MM Token" variant="outlined" fullWidth {...register("userToken")} />
             <TextField label="Thread Link" variant="outlined" fullWidth {...register("link")} />
             <AutoHeight hidden={chatId == null}>
