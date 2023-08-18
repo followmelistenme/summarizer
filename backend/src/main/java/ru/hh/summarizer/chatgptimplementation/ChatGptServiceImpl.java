@@ -10,6 +10,8 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.time.Duration;
+import java.util.List;
+import java.util.Map;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -27,20 +29,23 @@ public class ChatGptServiceImpl {
    this.objectMapper = new ObjectMapper().disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
   }
 
-  public String chatCompletion(String prompt) {
+  public ChatCompletion chatCompletion(String prompt) {
     try {
+      ChatCompletionRequest body = new ChatCompletionRequest();
+      body.model = MODEL_NAME;
+      body.messages = List.of(new MessageDTO("user", prompt));
       HttpRequest request = HttpRequest.newBuilder()
           .uri(new URI(PROXY_API_HOST + "/chat/completions"))
           .setHeader("Authorization", "Bearer %s".formatted(API_KEY))
           .setHeader("Content-Type", "application/json")
           .POST(HttpRequest.BodyPublishers.ofString(
-              "{\"model\": \"" + MODEL_NAME + "\", \"messages\": [{\"role\": \"user\", \"content\": \"" + prompt + "\"}]}")
-          )
+              objectMapper.writeValueAsString(body)
+//              "{\"model\": \"" + MODEL_NAME + "\", \"messages\": [{\"role\": \"user\", \"content\": \"" + prompt + "\"}]}")
+          ))
           .build();
       HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
-      ChatCompletion chatCompletion = objectMapper.readValue(response.body(), ChatCompletion.class);
-      return objectMapper.writeValueAsString(chatCompletion);
+      return objectMapper.readValue(response.body(), ChatCompletion.class);
     } catch (JsonMappingException e) {
       throw new RuntimeException(e);
     } catch (URISyntaxException e) {
