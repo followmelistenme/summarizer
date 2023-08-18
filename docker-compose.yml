@@ -9,6 +9,9 @@ services:
       - "5099:8080"
     networks:
       - base
+    depends_on:
+      - postgres
+
 #just for example
   frontend:
     build:
@@ -18,6 +21,15 @@ services:
       - "5098:8080"
     networks:
       - base
+
+  postgres:
+    image: 'postgres:latest'
+    environment:
+      - 'POSTGRES_DB=mydatabase'
+      - 'POSTGRES_PASSWORD=secret'
+      - 'POSTGRES_USER=myuser'
+    ports:
+      - '5432'
 
 networks:
   base:
