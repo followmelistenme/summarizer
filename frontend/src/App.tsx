@@ -1,6 +1,7 @@
-import { ChangeEvent, useState } from 'react'
 import { Button, TextField } from '@mui/material';
+import { useForm } from "react-hook-form";
 import { createUseStyles } from 'react-jss';
+import {Chat} from './components/Chat'
 
 const useStyles = createUseStyles({
     app: {
@@ -8,35 +9,30 @@ const useStyles = createUseStyles({
         flexDirection: 'column',
         alignItems: 'center',
         gap: '15px',
+        margin: '40px',
+        height: 'calc(100vh - 80px)',
     },
 })
 
 const App = () => {
     const classes = useStyles()
-    const [userToken, setToken] = useState<string>()
-    const [threadLink, setThreadLink] = useState<string>()
+    const { register, handleSubmit } = useForm();
 
-    const handleChangeToken = (event: ChangeEvent<HTMLInputElement>) => {
-        setToken(event.target.value)
-    }
-
-    const handleChangeThreadLink = (event: ChangeEvent<HTMLInputElement>) => {
-        setThreadLink(event.target.value)
-    }
-
-    const handleSubmit = () => {
-        console.log('22222')
+    const onSubmit = (data: any) => {
+        console.log(data)
     }
 
     return (
-        <div className={classes.app}>
-            <TextField label="MM Token" variant="filled" value={userToken} onChange={handleChangeToken} />
-            <TextField label="Thread Link" variant="filled" value={threadLink} onChange={handleChangeThreadLink} />
-            <TextField label="Promt" variant="filled" />
-            <Button onClick={handleSubmit} variant="contained">
+        <form className={classes.app} onSubmit={handleSubmit(onSubmit)}>
+            <TextField label="MM Token" variant="outlined" fullWidth {...register("token")} />
+            <TextField label="Thread Link" variant="outlined" fullWidth {...register("link")} />
+            <Chat />
+            <TextField label="Promt" variant="outlined" fullWidth {...register("promt")} />
+
+            <Button type="submit" variant="contained" fullWidth>
                 Summarize
             </Button>
-        </div>
+        </form>
     )
 }
 
