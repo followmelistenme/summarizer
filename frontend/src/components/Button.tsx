@@ -7,6 +7,8 @@ const useStyles = createUseStyles({
   root: {
     borderRadius: '16px',
     background: 'var(--accent)',
+    textTransform: 'none',
+
     '&:hover': {
       background: 'var(--accent-dark)',
     },
