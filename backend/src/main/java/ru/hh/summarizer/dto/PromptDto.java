@@ -1,4 +1,4 @@
 package ru.hh.summarizer.dto;
 
-public record PromptDto(String text) {
+public record PromptDto(String prompt) {
 }
