@@ -20,11 +20,11 @@ public class MattermostService {
   public MattermostService() {
     this.objectMapper = new ObjectMapper().disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
   }
-  public List<Message> getMessagesByThread(String threadId) {
+  public List<Message> getMessagesByThread(String threadId, String token) {
     try {
       HttpRequest request = HttpRequest.newBuilder()
           .uri(new URI(MM_URL + "/api/v4/posts/%s/thread".formatted(threadId)))
-          .setHeader("Authorization", "Bearer %s".formatted("token"))
+          .setHeader("Authorization", "Bearer %s".formatted(token))
           .GET()
           .build();
       HttpResponse<String> response = HttpClient

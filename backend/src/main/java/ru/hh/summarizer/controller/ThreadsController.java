@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import ru.hh.summarizer.SummarizerService;
 import ru.hh.summarizer.dto.ChatDto;
 import ru.hh.summarizer.dto.PromptDto;
 import ru.hh.summarizer.dto.ThreadLinkDto;
@@ -26,7 +27,7 @@ public class ThreadsController {
             content = {@Content(mediaType = "application/json", schema = @Schema(implementation = ChatDto.class))})
     @PostMapping("/thread")
     @ResponseStatus(HttpStatus.OK)
-    public ChatDto createChat(ThreadLinkDto threadLinkDto) {
+    public ChatDto createChat(@RequestBody ThreadLinkDto threadLinkDto) {
         return threadsService.createChat(threadLinkDto);
     }
 
@@ -35,7 +36,7 @@ public class ThreadsController {
             content = {@Content(mediaType = "application/json", schema = @Schema(implementation = ChatDto.class))})
     @PostMapping("{chatId}/prompt")
     @ResponseStatus(HttpStatus.OK)
-    public ChatDto addPrompt(@PathVariable Long chatId, PromptDto promptDto) {
+    public ChatDto addPrompt(@PathVariable Long chatId, @RequestBody PromptDto promptDto) {
         return threadsService.addPrompt(chatId, promptDto);
     }
 

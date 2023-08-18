@@ -23,8 +23,8 @@ public class SummarizerService {
     this.mattermostService = mattermostService;
   }
 
-  public String getSummary(String threadId) {
-    List<Message> mmThreadMessages = mattermostService.getMessagesByThread(threadId);
+  public String getSummary(String threadId, String token) {
+    List<Message> mmThreadMessages = mattermostService.getMessagesByThread(threadId, token);
     String summarizedText = "";
     List<String> wrappedMessageBatches = promptService.getWrappedMessageBatches(mmThreadMessages);
     for (String batch: wrappedMessageBatches) {

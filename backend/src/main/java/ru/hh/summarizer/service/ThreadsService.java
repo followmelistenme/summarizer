@@ -1,6 +1,7 @@
 package ru.hh.summarizer.service;
 
 import org.springframework.stereotype.Service;
+import ru.hh.summarizer.SummarizerService;
 import ru.hh.summarizer.dto.ChatDto;
 import ru.hh.summarizer.dto.MessageDto;
 import ru.hh.summarizer.dto.PromptDto;
@@ -11,9 +12,15 @@ import java.util.List;
 
 @Service
 public class ThreadsService {
+    private final SummarizerService summarizerService;
+
+    public ThreadsService(SummarizerService summarizerService) {
+        this.summarizerService = summarizerService;
+    }
 
     public ChatDto createChat(ThreadLinkDto threadLinkDto) {
-        MessageDto exampleMessageDto = new MessageDto(1L, LocalDateTime.now(), "text", true);
+        String summary = summarizerService.getSummary(threadLinkDto.threadLink(), threadLinkDto.userToken());
+        MessageDto exampleMessageDto = new MessageDto(1L, LocalDateTime.now(), summary, false);
         ChatDto exampleChatDto = new ChatDto(69L, List.of(exampleMessageDto));
         return exampleChatDto;
     }
