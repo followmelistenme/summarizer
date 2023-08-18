@@ -16,6 +16,7 @@ const useStyles = createUseStyles({
     width: '100%',
     padding: '30px',
     boxSizing: 'border-box',
+    background: '#fff',
   },
 })
 

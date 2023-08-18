@@ -1,7 +1,8 @@
-import { Button, TextField } from '@mui/material';
 import { useForm } from "react-hook-form";
 import { createUseStyles } from 'react-jss';
-import {Chat} from './components/Chat'
+import { Chat } from './components/Chat'
+import { Button } from './components/Button';
+import { TextField } from './components/TextField'
 
 const useStyles = createUseStyles({
     app: {
@@ -29,7 +30,7 @@ const App = () => {
             <Chat />
             <TextField label="Promt" variant="outlined" fullWidth {...register("promt")} />
 
-            <Button type="submit" variant="contained" fullWidth>
+            <Button type="submit" size="large" variant="contained" fullWidth>
                 Summarize
             </Button>
         </form>

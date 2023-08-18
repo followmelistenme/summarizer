@@ -10,17 +10,17 @@ type Props = {
 const useStyles = createUseStyles({
   root: {
     padding: '8px 12px',
-    background: '#4a86ff',
     borderRadius: '20px',
-    color: '#fff',
   },
   left: {
     alignSelf: 'start',
-    background: '#d9e5fd',
+    background: '#e0e0e0',
     color: '#000'
   },
   right: {
     alignSelf: 'end',
+    color: '#fff',
+    background: 'var(--accent)',
   },
 })
 
