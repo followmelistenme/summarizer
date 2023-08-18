@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef, useEffect } from 'react'
 import { FC } from "react"
 import { createUseStyles } from 'react-jss'
 import {Message} from './Message'
@@ -20,20 +20,31 @@ const useStyles = createUseStyles({
     padding: '30px',
     boxSizing: 'border-box',
     background: '#fff',
+    overflow: 'auto',
   },
 })
 
 export const Chat: FC<Props> = ({ messages = [] }) => {
   const classes = useStyles()
+  const messagesEnd = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    messagesEnd.current.scrollIntoView({ behavior: "smooth" });
+  }, [messages])
+
   return (
     <div className={classes.root}>
       {
         messages.map((message) => (
-          <Message key={message.id} float={message.isUser ? 'right' : 'left'}>
+          <Message key={message.id} float={message.isUser ? 'right' : 'left'} animated={message.id === 999 || !message.isUser}>
             {message.text}
           </Message>
         ))
       }
+      <div
+        style={{ float:"left", clear: "both" }}
+        ref={messagesEnd}
+      />
     </div>
   )
 }
