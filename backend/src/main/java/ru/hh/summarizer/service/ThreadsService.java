@@ -1,6 +1,5 @@
 package ru.hh.summarizer.service;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.hh.summarizer.dto.ChatDto;
 import ru.hh.summarizer.dto.MessageDto;
@@ -21,7 +20,7 @@ public class ThreadsService {
 
     public ChatDto addPrompt(Long chatId, PromptDto promptDto) {
         MessageDto exampleMessageDto = new MessageDto(1L, LocalDateTime.now().minusMinutes(10), "text", true);
-        MessageDto examplePrompt = new MessageDto(2L, LocalDateTime.now(), promptDto.text(), true);
+        MessageDto examplePrompt = new MessageDto(2L, LocalDateTime.now(), promptDto.prompt(), true);
         ChatDto exampleChatDto = new ChatDto(chatId, List.of(exampleMessageDto, examplePrompt));
         return exampleChatDto;
     }
