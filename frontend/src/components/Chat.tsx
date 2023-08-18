@@ -2,8 +2,11 @@ import React from 'react'
 import { FC } from "react"
 import { createUseStyles } from 'react-jss'
 import {Message} from './Message'
+import { MessageType } from '../types'
 
-type Props = {}
+type Props = {
+  messages: MessageType[]
+}
 
 const useStyles = createUseStyles({
   root: {
@@ -20,17 +23,17 @@ const useStyles = createUseStyles({
   },
 })
 
-export const Chat: FC<Props> = ({ children }) => {
+export const Chat: FC<Props> = ({ messages = [] }) => {
   const classes = useStyles()
   return (
     <div className={classes.root}>
-      {children}
-      <Message>
-         Summary
-      </Message>
-      <Message float="right">
-        Promt
-      </Message>
+      {
+        messages.map((message) => (
+          <Message key={message.id} float={message.isUser ? 'right' : 'left'}>
+            {message.text}
+          </Message>
+        ))
+      }
     </div>
   )
 }
