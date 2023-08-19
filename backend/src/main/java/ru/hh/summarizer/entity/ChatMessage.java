@@ -26,7 +26,7 @@ public class ChatMessage {
   @Getter
   private LocalDateTime creationTime;
 
-  @Column(name = "text", length = 4000)
+  @Column(name = "text", length = 100000)
   @Getter
   private String text;
 

@@ -10,8 +10,8 @@ public class Message {
     this.text = text;
   }
 
-  public static Message of(MMPost post) {
-    return new Message(post.userId(), post.message());
+  public static Message of(MMPost post, MMUser mmUser) {
+    return new Message("%s %s".formatted(mmUser.firstName(), mmUser.lastName()), post.message());
   }
 
   public String getSender() {
