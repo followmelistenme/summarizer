@@ -65,14 +65,14 @@ const App = () => {
         }
         
         setChatMessages((messages) => ([...messages, { id: 999, text: data.promt, isUser: true }]))
-        resetField('promt')
+        resetField('prompt')
 
         let promtResponse;
 
         try {
             promtResponse = await promtThread({
                 chatId,
-                promt: data.promt,
+                prompt: data.prompt,
             });
         } catch (e) {
             setError(e);

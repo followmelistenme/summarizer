@@ -65325,6 +65325,9 @@ var useStyles = (0,react_jss__WEBPACK_IMPORTED_MODULE_10__.createUseStyles)({
         overflow: 'visible',
     },
 });
+var getThreadId = function (link) {
+    return link.substring(link.lastIndexOf('/') + 1);
+};
 var App = function () {
     var classes = useStyles();
     var _a = (0,react_hook_form__WEBPACK_IMPORTED_MODULE_11__.useForm)(), register = _a.register, handleSubmit = _a.handleSubmit, formState = _a.formState, resetField = _a.resetField, setValue = _a.setValue, getValues = _a.getValues;
@@ -65338,6 +65341,9 @@ var App = function () {
                 case 0:
                     if (error) {
                         setError('');
+                    }
+                    if (data.threadLink) {
+                        data.threadLink = getThreadId(data.threadLink);
                     }
                     if (!(chatId == null)) return [3 /*break*/, 5];
                     threadResponse = void 0;
@@ -65381,7 +65387,7 @@ var App = function () {
             }
         });
     }); };
-    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("form", { className: classes.app, onSubmit: handleSubmit(onSubmit), children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "logo" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_TextField__WEBPACK_IMPORTED_MODULE_5__.TextField, __assign({ label: "MM Token", variant: "outlined", fullWidth: true }, register("userToken"), { disabled: !!chatId })), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_TextField__WEBPACK_IMPORTED_MODULE_5__.TextField, __assign({ label: "Thread Link", variant: "outlined", fullWidth: true }, register("threadLink"), { disabled: !!chatId || !!getValues().video })), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_FileUploader__WEBPACK_IMPORTED_MODULE_8__["default"], __assign({ setValue: setValue, disabled: !!chatId || !!formState.dirtyFields.threadLink }, register("video"))), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_components_Autoheight__WEBPACK_IMPORTED_MODULE_6__.AutoHeight, { hidden: chatId == null, children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_Chat__WEBPACK_IMPORTED_MODULE_3__.Chat, { messages: chatMessages }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_PromptSelect__WEBPACK_IMPORTED_MODULE_9__["default"], __assign({ label: "Promt", variant: "outlined", fullWidth: true }, register("promt")))] }), error && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_Error__WEBPACK_IMPORTED_MODULE_7__["default"], { children: error }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_Button__WEBPACK_IMPORTED_MODULE_4__.Button, { type: "submit", size: "large", variant: "contained", fullWidth: true, disabled: formState.isSubmitting, children: formState.isSubmitting ?
+    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("form", { className: classes.app, onSubmit: handleSubmit(onSubmit), children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "logo" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_TextField__WEBPACK_IMPORTED_MODULE_5__.TextField, __assign({ label: "MM Token", variant: "outlined", fullWidth: true }, register("userToken"), { disabled: !!chatId })), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_TextField__WEBPACK_IMPORTED_MODULE_5__.TextField, __assign({ label: "Thread Link", variant: "outlined", fullWidth: true }, register("threadLink"), { disabled: !!chatId || !!getValues().video })), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_FileUploader__WEBPACK_IMPORTED_MODULE_8__["default"], __assign({ setValue: setValue, disabled: !!chatId || !!formState.dirtyFields.threadLink }, register("video"))), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_components_Autoheight__WEBPACK_IMPORTED_MODULE_6__.AutoHeight, { hidden: chatId == null, children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_Chat__WEBPACK_IMPORTED_MODULE_3__.Chat, { messages: chatMessages }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_PromptSelect__WEBPACK_IMPORTED_MODULE_9__["default"], __assign({ label: "Promt", variant: "outlined", fullWidth: true }, register("prompt")))] }), error && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_Error__WEBPACK_IMPORTED_MODULE_7__["default"], { children: error }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_Button__WEBPACK_IMPORTED_MODULE_4__.Button, { type: "submit", size: "large", variant: "contained", fullWidth: true, disabled: formState.isSubmitting, children: formState.isSubmitting ?
                     (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_12__["default"], { size: 26, color: "inherit" }) : (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, { children: "Summarize" }) })] }));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (App);

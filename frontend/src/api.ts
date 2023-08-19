@@ -6,7 +6,7 @@ interface ThreadData {
 }
 
 interface PromtData {
-  promt: string
+  prompt: string
   chatId: number
 }
 
