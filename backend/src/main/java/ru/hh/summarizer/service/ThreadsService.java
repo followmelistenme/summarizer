@@ -9,7 +9,6 @@ import ru.hh.summarizer.dto.MessageDto;
 import ru.hh.summarizer.dto.PromptDto;
 import ru.hh.summarizer.dto.ThreadLinkDto;
 
-import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
 
@@ -40,9 +39,8 @@ public class ThreadsService {
         chatMessageFromGPT.setChat(chat);
         List<ChatMessage> messages = List.of(chatMessageFromUser, chatMessageFromGPT);
         chatMessageRepository.saveAll(messages);
-        MessageDto exampleMessageDto = new MessageDto(1L, LocalDateTime.now(), summary, false);
-        ChatDto exampleChatDto = new ChatDto(69L, List.of(exampleMessageDto));
-        return exampleChatDto;
+        List<MessageDto> messagesDto = messages.stream().map(this::messageToMessageDto).toList();
+        return new ChatDto(chat.getChatId(), messagesDto);
     }
 
     public ChatDto addPrompt(Long chatId, PromptDto promptDto) {
