@@ -33,7 +33,9 @@ public class ThreadsService {
         chat.setThreadUrl(threadLinkDto.threadLink());
         chat.setUserToken(threadLinkDto.userToken());
         chatRepository.save(chat);
-        ChatMessage chatMessageFromUser = new ChatMessage(threadLinkDto.threadLink(), true);
+        ChatMessage chatMessageFromUser = new ChatMessage(
+                "Mattermost chat id: %S".formatted(threadLinkDto.threadLink()), true
+        );
         chatMessageFromUser.setChat(chat);
         ChatMessage chatMessageFromGPT = new ChatMessage(summary, false);
         chatMessageFromGPT.setChat(chat);

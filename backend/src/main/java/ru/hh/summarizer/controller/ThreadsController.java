@@ -8,7 +8,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import ru.hh.summarizer.SummarizerService;
 import ru.hh.summarizer.dto.ChatDto;
 import ru.hh.summarizer.dto.PromptDto;
 import ru.hh.summarizer.dto.ThreadLinkDto;
