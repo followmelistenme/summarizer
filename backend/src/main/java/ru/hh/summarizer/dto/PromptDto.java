@@ -1,4 +1,6 @@
 package ru.hh.summarizer.dto;
 
-public record PromptDto(String prompt) {
+import jakarta.validation.constraints.NotNull;
+
+public record PromptDto(@NotNull String userToken, @NotNull String prompt) {
 }

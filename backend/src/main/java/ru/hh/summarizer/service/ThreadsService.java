@@ -48,14 +48,16 @@ public class ThreadsService {
     public ChatDto addPrompt(Long chatId, PromptDto promptDto) {
         Chat chat = chatRepository.findById(chatId)
                 .orElseThrow(() -> new RuntimeException("id не правильный"));
+
+        // save chat
         ChatMessage chatMessageFromUser = new ChatMessage(promptDto.prompt(), true);
         chatMessageFromUser.setChat(chat);
         chatMessageRepository.save(chatMessageFromUser);
-        String lastSummary = chat.getMessages().stream()
-                .max(Comparator.comparing(ChatMessage::getCreationTime))
-                .get() // to do сделать нормально
-                .getText();
-        String summary = summarizerService.getSummaryByPrompt(lastSummary, chatMessageFromUser.getText());
+
+        // get summary
+        String summary = summarizerService.getSummary(chat.getThreadUrl(), chat.getUserToken(), chatMessageFromUser.getText());
+
+        // save summary
         ChatMessage chatMessageFromGPT = new ChatMessage(summary, false);
         chatMessageFromGPT.setChat(chat);
         chatMessageRepository.save(chatMessageFromGPT);

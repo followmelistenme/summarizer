@@ -1,6 +1,7 @@
 package ru.hh.summarizer;
 
 import java.util.List;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 import ru.hh.summarizer.chatgptimplementation.ChatGptServiceImpl;
 import ru.hh.summarizer.mattermost.MattermostService;
@@ -24,20 +25,30 @@ public class SummarizerService {
   }
 
   public String getSummary(String threadId, String token) {
+    return getSummary(threadId, token, promptService.getCommonPrompt());
+  }
+
+  public String getSummary(String threadId, String token, String prompt) {
     List<Message> mmThreadMessages = mattermostService.getMessagesByThread(threadId, token);
     String summarizedText = "";
     List<String> wrappedMessageBatches = promptService.getWrappedMessageBatches(mmThreadMessages);
     for (String batch: wrappedMessageBatches) {
       summarizedText = "%s %s".formatted(
           summarizedText,
-          chatGptService.chatCompletion(promptService.getCommonPrompt(batch))
-              .choices.get(0)
-              .message
-              .content
+          summarizeSingleBatch(batch, prompt)
       );
     }
 
     return summarizedText;
+  }
+
+  private String summarizeSingleBatch(String batch, String prompt) {
+    String fullPrompt = "%s %s".formatted(prompt, batch);
+
+    return chatGptService.chatCompletion(fullPrompt)
+        .choices.get(0)
+        .message
+        .content;
   }
 
   public String getSummaryByPrompt(String lastSummary, String prompt) {

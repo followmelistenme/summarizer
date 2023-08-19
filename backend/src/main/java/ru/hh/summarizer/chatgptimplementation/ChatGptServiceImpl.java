@@ -34,6 +34,7 @@ public class ChatGptServiceImpl {
       ChatCompletionRequest body = new ChatCompletionRequest();
       body.model = MODEL_NAME;
       body.messages = List.of(new MessageDTO("user", prompt));
+      body.temperature = 0.5;
       HttpRequest request = HttpRequest.newBuilder()
           .uri(new URI(PROXY_API_HOST + "/chat/completions"))
           .setHeader("Authorization", "Bearer %s".formatted(API_KEY))

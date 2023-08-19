@@ -9,8 +9,8 @@ import ru.hh.summarizer.mattermost.Message;
 public class PromptService {
   private static final int THRESHOLD = 2800;
 
-  public String getCommonPrompt(String original) {
-    return "к какому выводу пришли в обсуждении? %s".formatted(original);
+  public String getCommonPrompt() {
+    return "к какому выводу пришли в обсуждении?";
   }
 
   public List<String> getWrappedMessageBatches(List<Message> threadMessages) {

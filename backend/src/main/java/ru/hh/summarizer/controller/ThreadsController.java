@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -35,7 +36,7 @@ public class ThreadsController {
             content = {@Content(mediaType = "application/json", schema = @Schema(implementation = ChatDto.class))})
     @PostMapping("{chatId}/prompt")
     @ResponseStatus(HttpStatus.OK)
-    public ChatDto addPrompt(@PathVariable Long chatId, @RequestBody PromptDto promptDto) {
+    public ChatDto addPrompt(@PathVariable Long chatId, @RequestBody @Valid PromptDto promptDto) {
         return threadsService.addPrompt(chatId, promptDto);
     }
 
