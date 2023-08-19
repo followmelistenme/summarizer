@@ -34,14 +34,13 @@ public class ChatGptServiceImpl {
       ChatCompletionRequest body = new ChatCompletionRequest();
       body.model = MODEL_NAME;
       body.messages = List.of(new MessageDTO("user", prompt));
-      body.temperature = 0.5;
+      body.temperature = 0.8;
       HttpRequest request = HttpRequest.newBuilder()
           .uri(new URI(PROXY_API_HOST + "/chat/completions"))
           .setHeader("Authorization", "Bearer %s".formatted(API_KEY))
           .setHeader("Content-Type", "application/json")
           .POST(HttpRequest.BodyPublishers.ofString(
               objectMapper.writeValueAsString(body)
-//              "{\"model\": \"" + MODEL_NAME + "\", \"messages\": [{\"role\": \"user\", \"content\": \"" + prompt + "\"}]}")
           ))
           .build();
       HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());

@@ -32,30 +32,18 @@ public class SummarizerService {
     List<Message> mmThreadMessages = mattermostService.getMessagesByThread(threadId, token);
     String summarizedText = "";
     List<String> wrappedMessageBatches = promptService.getWrappedMessageBatches(mmThreadMessages);
-    for (String batch: wrappedMessageBatches) {
-      summarizedText = "%s %s".formatted(
+    for (String batch : wrappedMessageBatches) {
+      summarizedText = "%s %s %s".formatted(
+          prompt,
           summarizedText,
-          summarizeSingleBatch(batch, prompt)
+          batch
       );
+      summarizedText = chatGptService.chatCompletion(summarizedText)
+          .choices.get(0)
+          .message
+          .content;
     }
 
     return summarizedText;
   }
-
-  private String summarizeSingleBatch(String batch, String prompt) {
-    String fullPrompt = "%s %s".formatted(prompt, batch);
-
-    return chatGptService.chatCompletion(fullPrompt)
-        .choices.get(0)
-        .message
-        .content;
-  }
-
-  public String getSummaryByPrompt(String lastSummary, String prompt) {
-    return chatGptService.chatCompletion("%s %s".formatted(prompt, lastSummary))
-            .choices.get(0)
-            .message
-            .content;
-  }
-
 }
