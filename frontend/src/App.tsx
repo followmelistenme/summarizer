@@ -101,11 +101,11 @@ const App = () => {
                 {...register("threadLink")}
                 disabled={!!chatId || !!getValues().video}
             />
-            <FileUploader
+            {/* <FileUploader
                 setValue={setValue}
                 disabled={!!chatId || !!formState.dirtyFields.threadLink}
                 {...register("video")}
-            /> 
+            />  */}
             <AutoHeight hidden={chatId == null}>
                 <Chat messages={chatMessages} />
                 <PromptSelect label="Promt" variant="outlined" fullWidth {...register("prompt")} />
