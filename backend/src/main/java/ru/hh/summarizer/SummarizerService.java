@@ -39,4 +39,12 @@ public class SummarizerService {
 
     return summarizedText;
   }
+
+  public String getSummaryByPrompt(String lastSummary, String prompt) {
+    return chatGptService.chatCompletion("%s %s".formatted(prompt, lastSummary))
+            .choices.get(0)
+            .message
+            .content;
+  }
+
 }

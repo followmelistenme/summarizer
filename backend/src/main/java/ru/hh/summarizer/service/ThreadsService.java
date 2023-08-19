@@ -12,6 +12,7 @@ import ru.hh.summarizer.dto.ThreadLinkDto;
 import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
+
 import ru.hh.summarizer.entity.Chat;
 import ru.hh.summarizer.entity.ChatMessage;
 
@@ -47,11 +48,14 @@ public class ThreadsService {
     public ChatDto addPrompt(Long chatId, PromptDto promptDto) {
         Chat chat = chatRepository.findById(chatId)
                 .orElseThrow(() -> new RuntimeException("id не правильный"));
-        // to do учитывать промпт
-        String summary = summarizerService.getSummary(chat.getThreadUrl(), chat.getUserToken());
         ChatMessage chatMessageFromUser = new ChatMessage(promptDto.prompt(), true);
         chatMessageFromUser.setChat(chat);
         chatMessageRepository.save(chatMessageFromUser);
+        String lastSummary = chat.getMessages().stream()
+                .max(Comparator.comparing(ChatMessage::getCreationTime))
+                .get() // to do сделать нормально
+                .getText();
+        String summary = summarizerService.getSummaryByPrompt(lastSummary, chatMessageFromUser.getText());
         ChatMessage chatMessageFromGPT = new ChatMessage(summary, false);
         chatMessageFromGPT.setChat(chat);
         chatMessageRepository.save(chatMessageFromGPT);
