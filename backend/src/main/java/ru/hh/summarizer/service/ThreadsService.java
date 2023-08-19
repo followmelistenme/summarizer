@@ -57,6 +57,11 @@ public class ThreadsService {
         ChatMessage chatMessageFromGPT = new ChatMessage(summary, false);
         chatMessageFromGPT.setChat(chat);
         chatMessageRepository.save(chatMessageFromGPT);
+
+        // быстрое решение чтобы обновить чат
+        chat = chatRepository.findById(chatId)
+            .orElseThrow(() -> new RuntimeException("id не правильный"));
+
         List<MessageDto> messages = chat.getMessages().stream()
                 .sorted(Comparator.comparing(ChatMessage::getCreationTime))
                 .map(this::messageToMessageDto)

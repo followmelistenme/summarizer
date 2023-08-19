@@ -46,13 +46,10 @@ public class ChatGptServiceImpl {
       HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
       return objectMapper.readValue(response.body(), ChatCompletion.class);
-    } catch (JsonMappingException e) {
-      throw new RuntimeException(e);
-    } catch (URISyntaxException e) {
-      throw new RuntimeException(e);
-    } catch (IOException e) {
+    } catch (URISyntaxException | IOException e) {
       throw new RuntimeException(e);
     } catch (InterruptedException e) {
+      Thread.currentThread().interrupt();
       throw new RuntimeException(e);
     }
   }
