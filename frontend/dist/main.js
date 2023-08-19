@@ -65923,8 +65923,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _mui_material_Select__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @mui/material/Select */ "./node_modules/@mui/material/Select/Select.js");
-/* harmony import */ var _mui_material_MenuItem__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @mui/material/MenuItem */ "./node_modules/@mui/material/MenuItem/MenuItem.js");
+/* harmony import */ var _mui_material_Select__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @mui/material/Select */ "./node_modules/@mui/material/Select/Select.js");
+/* harmony import */ var _mui_material_MenuItem__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @mui/material/MenuItem */ "./node_modules/@mui/material/MenuItem/MenuItem.js");
+/* harmony import */ var _mui_material_InputLabel__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @mui/material/InputLabel */ "./node_modules/@mui/material/InputLabel/InputLabel.js");
 /* harmony import */ var react_jss__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-jss */ "./node_modules/react-jss/dist/react-jss.esm.js");
 /* harmony import */ var _constants_promptDick__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../constants/promptDick */ "./src/constants/promptDick.ts");
 var __assign = (undefined && undefined.__assign) || function () {
@@ -65944,17 +65945,21 @@ var __assign = (undefined && undefined.__assign) || function () {
 
 
 
+
 var useStyles = (0,react_jss__WEBPACK_IMPORTED_MODULE_3__.createUseStyles)({
     root: {
         background: '#fff',
         borderRadius: '16px',
         border: 'none',
-        // '&:hover': {
-        //   borderColor: 'var(--accent-dark)',
-        // },
-        // '& .MuiFormLabel-root.Mui-focused ': {
-        //     color: 'var(--accent)',
-        // },
+        '& .MuiOutlinedInput-notchedOutline ': {
+            border: 'none',
+        },
+        '& .Mui-focused .MuiOutlinedInput-notchedOutline ': {
+            border: '2px solid red',
+        },
+        '& .MuiFormLabel-root.Mui-focused ': {
+            color: 'var(--accent)',
+        },
         '& .Mui-focused .MuiOutlinedInput-notchedOutline': {
             borderRadius: '16px',
             borderColor: 'var(--accent)',
@@ -65962,17 +65967,17 @@ var useStyles = (0,react_jss__WEBPACK_IMPORTED_MODULE_3__.createUseStyles)({
         '& :not(.Mui-focused) .MuiOutlinedInput-notchedOutline': {
             border: 0,
         },
-        // '& .MuiMuiSelectBase-input': {
-        //   '&:-webkit-autofill, &:-webkit-autofill:hover, &:-webkit-autofill:focus, &:-webkit-autofill:active': {
-        //       transition: 'background-color 0s 600000s, color 0s 600000s',
-        //     },
-        // },
+        '& .MuiInputBase-input': {
+            '&:-webkit-autofill, &:-webkit-autofill:hover, &:-webkit-autofill:focus, &:-webkit-autofill:active': {
+                transition: 'background-color 0s 600000s, color 0s 600000s',
+            },
+        },
     },
 });
 // @ts-ignore
 var PromptSelect = (0,react__WEBPACK_IMPORTED_MODULE_1__.forwardRef)(function (props, ref) {
     var classes = useStyles();
-    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_mui_material_Select__WEBPACK_IMPORTED_MODULE_4__["default"], __assign({}, props, { ref: ref, className: classes.root, label: "\u0412\u044B\u0431\u043A\u0440\u0438\u0442\u0435 \u0443\u0442\u043E\u0447\u043D\u044F\u044E\u0449\u0438\u0439 \u0432\u043E\u043F\u0440\u043E\u0441", children: _constants_promptDick__WEBPACK_IMPORTED_MODULE_2__.PROPMPT_DICK.map(function (item) { return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_mui_material_MenuItem__WEBPACK_IMPORTED_MODULE_5__["default"], { value: item, children: item }, item)); }) })));
+    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, { children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_mui_material_InputLabel__WEBPACK_IMPORTED_MODULE_4__["default"], { children: "\u0412\u044B\u0431\u0435\u0440\u0438\u0442\u0435 \u0443\u0442\u043E\u0447\u043D\u044F\u044E\u0449\u0438\u0439 \u0432\u043E\u043F\u0440\u043E\u0441" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_mui_material_Select__WEBPACK_IMPORTED_MODULE_5__["default"], __assign({}, props, { ref: ref, className: classes.root, label: "\u0412\u044B\u0431\u0435\u0440\u0438\u0442\u0435 \u0443\u0442\u043E\u0447\u043D\u044F\u044E\u0449\u0438\u0439 \u0432\u043E\u043F\u0440\u043E\u0441", children: _constants_promptDick__WEBPACK_IMPORTED_MODULE_2__.PROPMPT_DICK.map(function (item) { return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_mui_material_MenuItem__WEBPACK_IMPORTED_MODULE_6__["default"], { value: item, children: item }, item)); }) }))] }));
 });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (PromptSelect);
 

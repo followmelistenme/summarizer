@@ -27,6 +27,10 @@ const useStyles = createUseStyles({
     },
 })
 
+const getThreadId = (link: string) => {
+    return link.substring(link.lastIndexOf('/') + 1);
+};
+
 const App = () => {
     const classes = useStyles()
     const { register, handleSubmit, formState, resetField, setValue, getValues } = useForm();
@@ -37,6 +41,10 @@ const App = () => {
     const onSubmit = async (data: any) => {
         if (error) {
             setError('');
+        }
+
+        if (data.threadLink) {
+            data.threadLink = getThreadId(data.threadLink)
         }
 
         if (chatId == null) {
