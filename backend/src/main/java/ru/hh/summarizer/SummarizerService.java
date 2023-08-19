@@ -1,7 +1,6 @@
 package ru.hh.summarizer;
 
 import java.util.List;
-import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 import ru.hh.summarizer.chatgptimplementation.ChatGptServiceImpl;
 import ru.hh.summarizer.mattermost.MattermostService;

@@ -26,7 +26,9 @@ public class PromptService {
       if (currentPrompt.length() > THRESHOLD) {
         batches.add(currentPrompt.toString());
         currentPrompt.setLength(0);
+        continue;
       }
+      batches.add(currentPrompt.toString());
     }
 
     return batches;
