@@ -20982,12 +20982,11 @@ ___CSS_LOADER_EXPORT___.push([module.id, `body {
 }
 #app {
   font-family: helvetica;
-  box-sizing: border-box;
 }
 .container {
   background-color: antiquewhite;
 }
-`, "",{"version":3,"sources":["webpack://./src/styles.less"],"names":[],"mappings":"AAAA;EACI,SAAA;EACA,gBAAA;AACJ;AAEA;EACI,6DAAA;EACA,aAAA;EACA,WAAA;EACA,wBAAA;EACA,2BAAA;AAAJ;AAGA;EACI,iBAAA;EACA,sBAAA;AADJ;AAIA;EACI,sBAAA;EACA,sBAAA;AAFJ;AAMA;EACI,8BAAA;AAJJ","sourcesContent":["body {\n    margin: 0;\n    background: #eee;\n}\n\n.logo {\n    background: url('./logohh.svg') no-repeat;\n    height: 100px;\n    width: 100%;\n    background-size: contain;\n    background-position: center;\n}\n\n:root {\n    --accent: #df1111;\n    --accent-dark: #b41212;\n}\n\n#app {\n    font-family: helvetica;\n    box-sizing: border-box;\n\n}\n\n.container {\n    background-color: antiquewhite;\n}"],"sourceRoot":""}]);
+`, "",{"version":3,"sources":["webpack://./src/styles.less"],"names":[],"mappings":"AAAA;EACI,SAAA;EACA,gBAAA;AACJ;AAEA;EACI,6DAAA;EACA,aAAA;EACA,WAAA;EACA,wBAAA;EACA,2BAAA;AAAJ;AAGA;EACI,iBAAA;EACA,sBAAA;AADJ;AAIA;EACI,sBAAA;AAFJ;AAKA;EACI,8BAAA;AAHJ","sourcesContent":["body {\n    margin: 0;\n    background: #eee;\n}\n\n.logo {\n    background: url('./logohh.svg') no-repeat;\n    height: 100px;\n    width: 100%;\n    background-size: contain;\n    background-position: center;\n}\n\n:root {\n    --accent: #df1111;\n    --accent-dark: #b41212;\n}\n\n#app {\n    font-family: helvetica;\n}\n\n.container {\n    background-color: antiquewhite;\n}"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -65043,15 +65042,6 @@ var __generator = (undefined && undefined.__generator) || function (thisArg, bod
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var __spreadArray = (undefined && undefined.__spreadArray) || function (to, from, pack) {
-    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
-        if (ar || !(i in from)) {
-            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
-            ar[i] = from[i];
-        }
-    }
-    return to.concat(ar || Array.prototype.slice.call(from));
-};
 var mockedMessages = [];
 var mockedId = 2;
 var postData = function (url, data) { return __awaiter(void 0, void 0, void 0, function () {
@@ -65077,7 +65067,6 @@ var postData = function (url, data) { return __awaiter(void 0, void 0, void 0, f
                 return [4 /*yield*/, response.json()];
             case 2:
                 responseData = _a.sent();
-                console.log(111, responseData);
                 return [3 /*break*/, 4];
             case 3:
                 e_1 = _a.sent();
@@ -65100,23 +65089,25 @@ var summarizeThread = function (data) { return __awaiter(void 0, void 0, void 0,
             case 2:
                 e_2 = _a.sent();
                 throw e_2;
-            case 3:
-                mockedMessages.push.apply(mockedMessages, response.messages);
-                // mock
-                mockedMessages.push({
-                    id: 1,
-                    text: 'This is the initial thread',
-                    isUser: true,
-                });
-                mockedMessages.push({
-                    id: 2,
-                    text: 'The first summary of the initial thread',
-                    isUser: false,
-                });
-                return [2 /*return*/, {
-                        chatId: response.chatId,
-                        messages: mockedMessages,
-                    }];
+            case 3: 
+            // mock
+            // 
+            // mockedMessages.push(...response.messages)
+            // 
+            // mockedMessages.push({
+            //   id: 1,
+            //   text: 'This is the initial thread',
+            //   isUser: true,
+            // })
+            // mockedMessages.push({
+            //   id: 2,
+            //   text: 'The first summary of the initial thread',
+            //   isUser: false,
+            // })
+            return [2 /*return*/, {
+                    chatId: response.chatId,
+                    messages: response.messages,
+                }];
         }
     });
 }); };
@@ -65136,21 +65127,21 @@ var promtThread = function (data) { return __awaiter(void 0, void 0, void 0, fun
             case 3:
                 e_3 = _a.sent();
                 throw e_3;
-            case 4:
-                // mock
-                mockedMessages.push({
-                    id: mockedId++,
-                    text: data.promt,
-                    isUser: true,
-                });
-                mockedMessages.push({
-                    id: mockedId++,
-                    text: "This is the result of the previous promt: ".concat(data.promt),
-                    isUser: false,
-                });
-                return [2 /*return*/, {
-                        messages: __spreadArray([], mockedMessages, true),
-                    }];
+            case 4: 
+            // mock
+            // mockedMessages.push({
+            //   id: mockedId++,
+            //   text: data.promt,
+            //   isUser: true,
+            // })
+            // mockedMessages.push({
+            //   id: mockedId++,
+            //   text: `This is the result of the previous promt: ${data.promt}`,
+            //   isUser: false,
+            // })
+            return [2 /*return*/, {
+                    messages: response.messages,
+                }];
         }
     });
 }); };
@@ -65322,7 +65313,9 @@ __webpack_require__.r(__webpack_exports__);
 
 var useStyles = (0,react_jss__WEBPACK_IMPORTED_MODULE_1__.createUseStyles)({
     root: {
-        width: '100%'
+        width: '100%',
+        boxSizing: 'border-box',
+        borderRadius: '16px',
     },
 });
 var Error = function (_a) {
