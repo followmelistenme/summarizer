@@ -11,7 +11,7 @@ const useStyles = createUseStyles({
         boxSizing: 'border-box',
         borderRadius: '16px',
     },
-  })
+})
 
 const Error: FC = ({ children }) => {
     const styles = useStyles();

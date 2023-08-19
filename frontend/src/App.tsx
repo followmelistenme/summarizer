@@ -1,4 +1,4 @@
-import { useForm } from "react-hook-form";
+import { get, useForm } from "react-hook-form";
 import { useState } from 'react'
 import { createUseStyles } from 'react-jss';
 import { CircularProgress } from '@mui/material';
@@ -10,6 +10,8 @@ import { Button } from './components/Button';
 import { TextField } from './components/TextField'
 import { AutoHeight } from './components/Autoheight'
 import Error from './components/Error';
+import FileUploader from './components/FileUploader';
+import PromptSelect from './components/PromptSelect';
 
 import { MessageType } from "./types";
 
@@ -27,13 +29,13 @@ const useStyles = createUseStyles({
 
 const App = () => {
     const classes = useStyles()
-    const { register, handleSubmit, formState, resetField } = useForm();
+    const { register, handleSubmit, formState, resetField, setValue, getValues } = useForm();
     const [chatId, setChatId] = useState<number>(null)
     const [chatMessages, setChatMessages] = useState<MessageType[]>([])
-    const [responseError, setError] = useState('');
+    const [error, setError] = useState('');
 
     const onSubmit = async (data: any) => {
-        if (responseError) {
+        if (error) {
             setError('');
         }
 
@@ -77,13 +79,30 @@ const App = () => {
     return (
         <form className={classes.app} onSubmit={handleSubmit(onSubmit)}>
             <div className="logo" />
-            <TextField label="MM Token" variant="outlined" fullWidth {...register("userToken")} />
-            <TextField label="Thread Link" variant="outlined" fullWidth {...register("link")} />
+            <TextField
+                label="MM Token"
+                variant="outlined"
+                fullWidth
+                {...register("userToken")}
+                disabled={!!chatId}
+            />
+            <TextField
+                label="Thread Link"
+                variant="outlined"
+                fullWidth
+                {...register("threadLink")}
+                disabled={!!chatId || !!getValues().video}
+            />
+            <FileUploader
+                setValue={setValue}
+                disabled={!!chatId || !!formState.dirtyFields.threadLink}
+                {...register("video")}
+            /> 
             <AutoHeight hidden={chatId == null}>
                 <Chat messages={chatMessages} />
-                <TextField label="Promt" variant="outlined" fullWidth {...register("promt")} />
+                <PromptSelect label="Promt" variant="outlined" fullWidth {...register("promt")} />
             </AutoHeight>
-            {responseError && <Error>{responseError}</Error>}
+            {error && <Error>{error}</Error>}
             <Button type="submit" size="large" variant="contained" fullWidth disabled={formState.isSubmitting}>
                 {formState.isSubmitting ? 
                     <CircularProgress size={26} color="inherit" /> : <>Summarize</>

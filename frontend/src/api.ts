@@ -21,8 +21,6 @@ const postData = async <T>(url: string, data: ThreadData | PromtData): Promise<T
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-        "Accept": "application/json",
       },
       body: JSON.stringify(data)
     });
