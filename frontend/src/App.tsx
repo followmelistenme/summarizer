@@ -1,12 +1,16 @@
 import { useForm } from "react-hook-form";
 import { useState } from 'react'
 import { createUseStyles } from 'react-jss';
+import { CircularProgress } from '@mui/material';
+
+import { summarizeThread, promtThread } from './api'
+
 import { Chat } from './components/Chat'
 import { Button } from './components/Button';
 import { TextField } from './components/TextField'
-import { CircularProgress } from '@mui/material';
-import { summarizeThread, promtThread } from './api'
 import { AutoHeight } from './components/Autoheight'
+import Error from './components/Error';
+
 import { MessageType } from "./types";
 
 const useStyles = createUseStyles({
@@ -26,10 +30,25 @@ const App = () => {
     const { register, handleSubmit, formState, resetField } = useForm();
     const [chatId, setChatId] = useState<number>(null)
     const [chatMessages, setChatMessages] = useState<MessageType[]>([])
+    const [responseError, setError] = useState('');
 
     const onSubmit = async (data: any) => {
+        if (responseError) {
+            setError('');
+        }
+
         if (chatId == null) {
-            const { chatId, messages } = await summarizeThread(data)
+            let threadResponse;
+
+            try {
+                threadResponse = await summarizeThread(data);
+            } catch (e) {
+                setError(e);
+                return;
+            }
+
+            const { chatId, messages } = threadResponse;
+
             setChatId(chatId)
             setChatMessages(messages)
             return
@@ -38,11 +57,21 @@ const App = () => {
         setChatMessages((messages) => ([...messages, { id: 999, text: data.promt, isUser: true }]))
         resetField('promt')
 
-        const { messages } = await promtThread({
-            chatId,
-            promt: data.promt,
-        })
-        setChatMessages(messages)
+        let promtResponse;
+
+        try {
+            promtResponse = await promtThread({
+                chatId,
+                promt: data.promt,
+            });
+        } catch (e) {
+            setError(e);
+            return;
+        }
+
+        const { messages } = promtResponse;
+
+        setChatMessages(messages);
     }
 
     return (
@@ -54,6 +83,7 @@ const App = () => {
                 <Chat messages={chatMessages} />
                 <TextField label="Promt" variant="outlined" fullWidth {...register("promt")} />
             </AutoHeight>
+            {responseError && <Error>{responseError}</Error>}
             <Button type="submit" size="large" variant="contained" fullWidth disabled={formState.isSubmitting}>
                 {formState.isSubmitting ? 
                     <CircularProgress size={26} color="inherit" /> : <>Summarize</>

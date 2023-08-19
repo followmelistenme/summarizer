@@ -3,6 +3,7 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const webpack = require('webpack');
 
 const isProduction = process.env.NODE_ENV == 'production';
 
@@ -20,13 +21,15 @@ const config = {
         open: true,
         host: 'localhost',
     },
+    devtool: false,
     plugins: [
         new HtmlWebpackPlugin({
             template: 'index.html',
         }),
-
-        // Add your plugins here
-        // Learn more about plugins from https://webpack.js.org/configuration/plugins/
+        new webpack.SourceMapDevToolPlugin({
+            filename: '[file].map',
+            exclude: [/vendor/],
+        }),
     ],
     module: {
         rules: [
