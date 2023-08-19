@@ -108,7 +108,7 @@ const App = () => {
             /> 
             <AutoHeight hidden={chatId == null}>
                 <Chat messages={chatMessages} />
-                <PromptSelect label="Promt" variant="outlined" fullWidth {...register("promt")} />
+                <PromptSelect label="Promt" variant="outlined" fullWidth {...register("prompt")} />
             </AutoHeight>
             {error && <Error>{error}</Error>}
             <Button type="submit" size="large" variant="contained" fullWidth disabled={formState.isSubmitting}>
