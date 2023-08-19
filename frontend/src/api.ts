@@ -8,6 +8,7 @@ interface ThreadData {
 interface PromtData {
   prompt: string
   chatId: number
+  userToken: string
 }
 
 const mockedMessages: MessageType[] = []
@@ -39,60 +40,29 @@ const postData = async <T>(url: string, data: ThreadData | PromtData): Promise<T
     
 }
 
-const THREADS_URL = 'http://localhost:5099/api/threads/thread';
-
-export const summarizeThread = async (data: ThreadData) => {
+export const summarizeThread = async (url: string, data: ThreadData) => {
   let response: ThreadResponseType;
 
-    try {
-      response = await postData<ThreadResponseType>(THREADS_URL, data);
-    } catch (e) {
-      throw e;
-    }
+  try {
+    response = await postData<ThreadResponseType>(url, data);
+  } catch (e) {
+    throw e;
+  }
 
-    // mock
-    // 
-    // mockedMessages.push(...response.messages)
-    // 
-    // mockedMessages.push({
-    //   id: 1,
-    //   text: 'This is the initial thread',
-    //   isUser: true,
-    // })
-  
-    // mockedMessages.push({
-    //   id: 2,
-    //   text: 'The first summary of the initial thread',
-    //   isUser: false,
-    // })
-  
   return {
       chatId: response.chatId,
       messages: response.messages,
     }
 }
 
-export const promtThread = async (data: PromtData) => {
-  const PROMT_URL = `http://localhost:5099/api/threads/${data.chatId}/prompt`;
+export const promtThread = async (url: string, data: PromtData) => {
   let response: PromtResponseType;
 
-    try {
-      response = await postData<PromtResponseType>(PROMT_URL, data);
-    } catch (e) {
-      throw e;
-    }
-
-    // mock
-  // mockedMessages.push({
-  //   id: mockedId++,
-  //   text: data.promt,
-  //   isUser: true,
-  // })
-  // mockedMessages.push({
-  //   id: mockedId++,
-  //   text: `This is the result of the previous promt: ${data.promt}`,
-  //   isUser: false,
-  // })
+  try {
+    response = await postData<PromtResponseType>(url, data);
+  } catch (e) {
+    throw e;
+  }
 
   return {
     messages: response.messages,

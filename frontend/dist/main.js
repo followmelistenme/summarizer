@@ -65243,7 +65243,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_TextField__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/TextField */ "./src/components/TextField.tsx");
 /* harmony import */ var _components_Autoheight__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/Autoheight */ "./src/components/Autoheight.tsx");
 /* harmony import */ var _components_Error__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/Error */ "./src/components/Error.tsx");
-/* harmony import */ var _components_FileUploader__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/FileUploader */ "./src/components/FileUploader.tsx");
+/* harmony import */ var _components_TranscribationField__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/TranscribationField */ "./src/components/TranscribationField.tsx");
 /* harmony import */ var _components_PromptSelect__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/PromptSelect */ "./src/components/PromptSelect.tsx");
 var __assign = (undefined && undefined.__assign) || function () {
     __assign = Object.assign || function(t) {
@@ -65325,6 +65325,8 @@ var useStyles = (0,react_jss__WEBPACK_IMPORTED_MODULE_10__.createUseStyles)({
         overflow: 'visible',
     },
 });
+var THREADS_URL = 'http://localhost:5099/api/threads/thread';
+var TRANSCRIBATION_URL = 'http://localhost:5099/api/threads/transcribation';
 var getThreadId = function (link) {
     return link.substring(link.lastIndexOf('/') + 1);
 };
@@ -65335,7 +65337,7 @@ var App = function () {
     var _c = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)([]), chatMessages = _c[0], setChatMessages = _c[1];
     var _d = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(''), error = _d[0], setError = _d[1];
     var onSubmit = function (data) { return __awaiter(void 0, void 0, void 0, function () {
-        var threadResponse, e_1, chatId_1, messages_1, promtResponse, e_2, messages;
+        var apiUrl, threadResponse, e_1, chatId_1, messages_1, promtResponse, e_2, messages;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -65346,11 +65348,13 @@ var App = function () {
                         data.threadLink = getThreadId(data.threadLink);
                     }
                     if (!(chatId == null)) return [3 /*break*/, 5];
+                    console.log(123123, data);
+                    apiUrl = data.transcribation ? TRANSCRIBATION_URL : THREADS_URL;
                     threadResponse = void 0;
                     _a.label = 1;
                 case 1:
                     _a.trys.push([1, 3, , 4]);
-                    return [4 /*yield*/, (0,_api__WEBPACK_IMPORTED_MODULE_2__.summarizeThread)(data)];
+                    return [4 /*yield*/, (0,_api__WEBPACK_IMPORTED_MODULE_2__.summarizeThread)(apiUrl, data)];
                 case 2:
                     threadResponse = _a.sent();
                     return [3 /*break*/, 4];
@@ -65365,13 +65369,13 @@ var App = function () {
                     return [2 /*return*/];
                 case 5:
                     setChatMessages(function (messages) { return (__spreadArray(__spreadArray([], messages, true), [{ id: 999, text: data.promt, isUser: true }], false)); });
-                    resetField('promt');
+                    resetField('prompt');
                     _a.label = 6;
                 case 6:
                     _a.trys.push([6, 8, , 9]);
                     return [4 /*yield*/, (0,_api__WEBPACK_IMPORTED_MODULE_2__.promtThread)({
                             chatId: chatId,
-                            promt: data.promt,
+                            prompt: data.prompt,
                         })];
                 case 7:
                     promtResponse = _a.sent();
@@ -65387,7 +65391,11 @@ var App = function () {
             }
         });
     }); };
-    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("form", { className: classes.app, onSubmit: handleSubmit(onSubmit), children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "logo" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_TextField__WEBPACK_IMPORTED_MODULE_5__.TextField, __assign({ label: "MM Token", variant: "outlined", fullWidth: true }, register("userToken"), { disabled: !!chatId })), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_TextField__WEBPACK_IMPORTED_MODULE_5__.TextField, __assign({ label: "Thread Link", variant: "outlined", fullWidth: true }, register("threadLink"), { disabled: !!chatId || !!getValues().video })), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_FileUploader__WEBPACK_IMPORTED_MODULE_8__["default"], __assign({ setValue: setValue, disabled: !!chatId || !!formState.dirtyFields.threadLink }, register("video"))), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_components_Autoheight__WEBPACK_IMPORTED_MODULE_6__.AutoHeight, { hidden: chatId == null, children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_Chat__WEBPACK_IMPORTED_MODULE_3__.Chat, { messages: chatMessages }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_PromptSelect__WEBPACK_IMPORTED_MODULE_9__["default"], __assign({ label: "Promt", variant: "outlined", fullWidth: true }, register("prompt")))] }), error && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_Error__WEBPACK_IMPORTED_MODULE_7__["default"], { children: error }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_Button__WEBPACK_IMPORTED_MODULE_4__.Button, { type: "submit", size: "large", variant: "contained", fullWidth: true, disabled: formState.isSubmitting, children: formState.isSubmitting ?
+    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("form", { className: classes.app, onSubmit: handleSubmit(onSubmit), children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", { className: "logo" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_TextField__WEBPACK_IMPORTED_MODULE_5__.TextField, __assign({ label: "MM Token", variant: "outlined", fullWidth: true }, register("userToken"), { disabled: !!chatId || !!getValues().transcribation })), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_TextField__WEBPACK_IMPORTED_MODULE_5__.TextField, __assign({ label: "Thread Link", variant: "outlined", fullWidth: true }, register("threadLink"), { disabled: !!chatId || !!getValues().transcribation })), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_TranscribationField__WEBPACK_IMPORTED_MODULE_8__["default"]
+            // @ts-ignore
+            , __assign({ 
+                // @ts-ignore
+                label: "Thread Transcribation", variant: "outlined" }, register("transcribation"), { disabled: !!chatId || !!getValues().threadLink || !!getValues().userToken })), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_components_Autoheight__WEBPACK_IMPORTED_MODULE_6__.AutoHeight, { hidden: chatId == null, children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_Chat__WEBPACK_IMPORTED_MODULE_3__.Chat, { messages: chatMessages }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_PromptSelect__WEBPACK_IMPORTED_MODULE_9__["default"], __assign({ label: "Promt", variant: "outlined", fullWidth: true }, register("prompt")))] }), error && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_Error__WEBPACK_IMPORTED_MODULE_7__["default"], { children: error }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_components_Button__WEBPACK_IMPORTED_MODULE_4__.Button, { type: "submit", size: "large", variant: "contained", fullWidth: true, disabled: formState.isSubmitting, children: formState.isSubmitting ?
                     (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_12__["default"], { size: 26, color: "inherit" }) : (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, { children: "Summarize" }) })] }));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (App);
@@ -65474,14 +65482,13 @@ var postData = function (url, data) { return __awaiter(void 0, void 0, void 0, f
         }
     });
 }); };
-var THREADS_URL = 'http://localhost:5099/api/threads/thread';
-var summarizeThread = function (data) { return __awaiter(void 0, void 0, void 0, function () {
+var summarizeThread = function (url, data) { return __awaiter(void 0, void 0, void 0, function () {
     var response, e_2;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
                 _a.trys.push([0, 2, , 3]);
-                return [4 /*yield*/, postData(THREADS_URL, data)];
+                return [4 /*yield*/, postData(url, data)];
             case 1:
                 response = _a.sent();
                 return [3 /*break*/, 3];
@@ -65727,135 +65734,6 @@ var Error = function (_a) {
 
 /***/ }),
 
-/***/ "./src/components/FileUploader.tsx":
-/*!*****************************************!*\
-  !*** ./src/components/FileUploader.tsx ***!
-  \*****************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @mui/material */ "./node_modules/@mui/material/CircularProgress/CircularProgress.js");
-/* harmony import */ var _Button__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Button */ "./src/components/Button.tsx");
-/* harmony import */ var react_jss__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-jss */ "./node_modules/react-jss/dist/react-jss.esm.js");
-var __assign = (undefined && undefined.__assign) || function () {
-    __assign = Object.assign || function(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-                t[p] = s[p];
-        }
-        return t;
-    };
-    return __assign.apply(this, arguments);
-};
-var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-var __generator = (undefined && undefined.__generator) || function (thisArg, body) {
-    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
-    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
-    function verb(n) { return function (v) { return step([n, v]); }; }
-    function step(op) {
-        if (f) throw new TypeError("Generator is already executing.");
-        while (g && (g = 0, op[0] && (_ = 0)), _) try {
-            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
-            if (y = 0, t) op = [op[0] & 2, t.value];
-            switch (op[0]) {
-                case 0: case 1: t = op; break;
-                case 4: _.label++; return { value: op[1], done: false };
-                case 5: _.label++; y = op[1]; op = [0]; continue;
-                case 7: op = _.ops.pop(); _.trys.pop(); continue;
-                default:
-                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
-                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
-                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
-                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
-                    if (t[2]) _.ops.pop();
-                    _.trys.pop(); continue;
-            }
-            op = body.call(thisArg, _);
-        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
-        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
-    }
-};
-var __rest = (undefined && undefined.__rest) || function (s, e) {
-    var t = {};
-    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
-        t[p] = s[p];
-    if (s != null && typeof Object.getOwnPropertySymbols === "function")
-        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
-            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
-                t[p[i]] = s[p[i]];
-        }
-    return t;
-};
-
-
-
-
-
-var useStyles = (0,react_jss__WEBPACK_IMPORTED_MODULE_3__.createUseStyles)({
-    video: {
-        width: '100%',
-        boxSizing: 'border-box',
-        borderRadius: '16px',
-    },
-    container: {
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'baseline',
-        width: '100%',
-        maxWidth: '500px',
-        gap: '12px',
-        marginRight: 'auto'
-    }
-});
-;
-// @ts-ignore
-var FileUploader = (0,react__WEBPACK_IMPORTED_MODULE_1__.forwardRef)(function (_a) {
-    var setValue = _a.setValue, disabled = _a.disabled, ref = _a.ref, props = __rest(_a, ["setValue", "disabled", "ref"]);
-    var _b = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(''), dataUrl = _b[0], setDataUrl = _b[1];
-    var _c = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false), isLoading = _c[0], setIsLoading = _c[1];
-    var styles = useStyles();
-    var handleFileChange = function (e) { return __awaiter(void 0, void 0, void 0, function () {
-        var file, fileReader;
-        return __generator(this, function (_a) {
-            if (e.target.files) {
-                file = e.target.files[0];
-                // @ts-ignore
-                props.onChange(e);
-                setValue('video', file);
-                setIsLoading(true);
-                fileReader = new FileReader();
-                fileReader.readAsDataURL(file);
-                fileReader.onload = function (e) {
-                    setDataUrl(e.target.result);
-                    setIsLoading(false);
-                };
-            }
-            return [2 /*return*/];
-        });
-    }); };
-    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: styles.container, children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_Button__WEBPACK_IMPORTED_MODULE_2__.Button, { variant: "contained", component: "label", disabled: disabled, children: [isLoading ? (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_4__["default"], { size: 26, color: "inherit" }) : (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, { children: "Upload Video" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", __assign({ ref: ref, hidden: true, accept: 'video/*', type: "file" }, props, { onChange: handleFileChange }))] }), dataUrl && !isLoading && (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("video", { className: styles.video, controls: true, src: dataUrl })] }));
-});
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (FileUploader);
-
-
-/***/ }),
-
 /***/ "./src/components/Message.tsx":
 /*!************************************!*\
   !*** ./src/components/Message.tsx ***!
@@ -66046,6 +65924,78 @@ var TextField = (0,react__WEBPACK_IMPORTED_MODULE_1__.forwardRef)(function (prop
     var classes = useStyles();
     return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_3__["default"], __assign({}, props, { ref: ref, className: classes.root })));
 });
+
+
+/***/ }),
+
+/***/ "./src/components/TranscribationField.tsx":
+/*!************************************************!*\
+  !*** ./src/components/TranscribationField.tsx ***!
+  \************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _mui_base_TextareaAutosize__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @mui/base/TextareaAutosize */ "./node_modules/@mui/base/TextareaAutosize/TextareaAutosize.js");
+/* harmony import */ var _mui_material_InputLabel__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @mui/material/InputLabel */ "./node_modules/@mui/material/InputLabel/InputLabel.js");
+/* harmony import */ var react_jss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-jss */ "./node_modules/react-jss/dist/react-jss.esm.js");
+var __assign = (undefined && undefined.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
+
+
+
+
+
+var useStyles = (0,react_jss__WEBPACK_IMPORTED_MODULE_2__.createUseStyles)({
+    container: {
+        width: '100%',
+    },
+    root: {
+        background: '#fff',
+        borderRadius: '8px',
+        width: '100%',
+        height: 'auto !important',
+        minHeight: '20vh',
+        overflow: 'scroll !important',
+        boxSizing: 'border-box',
+        '& .MuiFormLabel-root.Mui-focused ': {
+            color: 'var(--accent)',
+        },
+        '& .Mui-focused .MuiOutlinedInput-notchedOutline': {
+            borderRadius: '16px',
+            borderColor: 'var(--accent)',
+        },
+        '& :not(.Mui-focused) .MuiOutlinedInput-notchedOutline': {
+            border: 0,
+        },
+        '& .MuiInputBase-input': {
+            '&:-webkit-autofill, &:-webkit-autofill:hover, &:-webkit-autofill:focus, &:-webkit-autofill:active': {
+                transition: 'background-color 0s 600000s, color 0s 600000s',
+            },
+        },
+    },
+});
+// @ts-ignore
+var TranscribationField = (0,react__WEBPACK_IMPORTED_MODULE_1__.forwardRef)(function (props, ref) {
+    var classes = useStyles();
+    return ((0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", { className: classes.container, children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_mui_material_InputLabel__WEBPACK_IMPORTED_MODULE_3__["default"], { children: "\u0412\u0432\u0435\u0434\u0438 \u0442\u0440\u0430\u043D\u0441\u043A\u0440\u0438\u0431\u0438\u0440\u043E\u0432\u0430\u043D\u043D\u044B\u0439 \u0442\u0435\u043A\u0441\u0442" }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_mui_base_TextareaAutosize__WEBPACK_IMPORTED_MODULE_4__.TextareaAutosize, __assign({}, props, { ref: ref, className: classes.root }))] }));
+});
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (TranscribationField);
 
 
 /***/ }),
