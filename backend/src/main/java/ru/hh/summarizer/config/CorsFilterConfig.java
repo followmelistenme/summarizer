@@ -16,6 +16,7 @@ public class CorsFilterConfig {
         config.setAllowCredentials(true);
         config.addAllowedOrigin("http://localhost:8080");
         config.addAllowedOrigin("http://frontend:5098");
+        config.addAllowedOrigin("http://localhost:5098");
         config.addAllowedOrigin("/**");
         config.addAllowedHeader("*");
         config.addAllowedMethod("*");
