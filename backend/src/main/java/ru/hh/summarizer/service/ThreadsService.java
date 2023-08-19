@@ -10,6 +10,7 @@ import ru.hh.summarizer.dto.PromptDto;
 import ru.hh.summarizer.dto.ThreadLinkDto;
 
 import java.time.LocalDateTime;
+import java.util.Comparator;
 import java.util.List;
 import ru.hh.summarizer.entity.Chat;
 import ru.hh.summarizer.entity.ChatMessage;
@@ -29,6 +30,8 @@ public class ThreadsService {
     public ChatDto createChat(ThreadLinkDto threadLinkDto) {
         String summary = summarizerService.getSummary(threadLinkDto.threadLink(), threadLinkDto.userToken());
         Chat chat = new Chat();
+        chat.setThreadUrl(threadLinkDto.threadLink());
+        chat.setUserToken(threadLinkDto.userToken());
         chatRepository.save(chat);
         ChatMessage chatMessageFromUser = new ChatMessage(threadLinkDto.threadLink(), true);
         chatMessageFromUser.setChat(chat);
@@ -42,10 +45,25 @@ public class ThreadsService {
     }
 
     public ChatDto addPrompt(Long chatId, PromptDto promptDto) {
-        MessageDto exampleMessageDto = new MessageDto(1L, LocalDateTime.now().minusMinutes(10), "text", true);
-        MessageDto examplePrompt = new MessageDto(2L, LocalDateTime.now(), promptDto.prompt(), true);
-        ChatDto exampleChatDto = new ChatDto(chatId, List.of(exampleMessageDto, examplePrompt));
-        return exampleChatDto;
+        Chat chat = chatRepository.findById(chatId)
+                .orElseThrow(() -> new RuntimeException("id не правильный"));
+        // to do учитывать промпт
+        String summary = summarizerService.getSummary(chat.getThreadUrl(), chat.getUserToken());
+        ChatMessage chatMessageFromUser = new ChatMessage(promptDto.prompt(), true);
+        chatMessageFromUser.setChat(chat);
+        chatMessageRepository.save(chatMessageFromUser);
+        ChatMessage chatMessageFromGPT = new ChatMessage(summary, false);
+        chatMessageFromGPT.setChat(chat);
+        chatMessageRepository.save(chatMessageFromGPT);
+        List<MessageDto> messages = chat.getMessages().stream()
+                .sorted(Comparator.comparing(ChatMessage::getCreationTime))
+                .map(this::messageToMessageDto)
+                .toList();
+        return new ChatDto(chatId, messages);
+    }
+
+    private MessageDto messageToMessageDto(ChatMessage message) {
+        return new MessageDto(message.getId(), message.getCreationTime(), message.getText(), message.isUser());
     }
 
 }
